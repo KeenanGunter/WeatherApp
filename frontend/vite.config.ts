@@ -11,10 +11,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://5880s11ui6.execute-api.us-east-2.amazonaws.com',
+        target: 'https://x6y8267y1h.execute-api.us-east-2.amazonaws.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/dev'),
       },
     },
   },
 });
+

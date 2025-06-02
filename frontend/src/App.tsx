@@ -1,29 +1,27 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import AppHeader from './components/general/AppHeader';
+import AppFooter from './components/general/AppFooter';
+import Home from './pages/Home'
 
 function App() {
-  const [message, setMessage] = useState('Loading...');
-
-  useEffect(() => {
-    fetch('/api/weather')
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        const parsed = JSON.parse(data.body);
-        setMessage(parsed.message);
-      })
-      .catch((err) => {
-        console.error('Fetch error:', err);
-        setMessage('Error: ' + err.message);
-      });
-  }, []);
-
   return (
-    <div className="text-xl font-semibold">
-      {message}
-    </div>
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        <AppHeader />
+        
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
+        
+        <AppFooter />
+      </div>
+    </Router>
   );
 }
 
