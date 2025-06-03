@@ -4,9 +4,15 @@ interface Props {
   current: WeatherCurrent;
   maxTempC: number;
   minTempC: number;
+  isCelsius: boolean;
 }
 
-const CurrentWeatherCard = ({ current, maxTempC, minTempC }: Props) => {
+const CurrentWeatherCard = ({
+  current,
+  maxTempC,
+  minTempC,
+  isCelsius,
+}: Props) => {
   return (
     <div className="mt-4 bg-white rounded-lg shadow-md px-6 py-4 max-w-md mx-auto">
       <div className="flex items-start space-x-4">
@@ -17,7 +23,7 @@ const CurrentWeatherCard = ({ current, maxTempC, minTempC }: Props) => {
         />
         <div>
           <p className="text-xl text-gray-800 font-semibold">
-            {current.temp_f}°F
+            {isCelsius ? `${current.temp_c}°C` : `${current.temp_f}°F`}
           </p>
           <p className="text-lg text-gray-700 font-medium">
             {current.condition.text}
@@ -27,16 +33,21 @@ const CurrentWeatherCard = ({ current, maxTempC, minTempC }: Props) => {
 
       <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-gray-700">
         <p>
-          <span className="font-semibold">Feels Like:</span> {current.feelslike_f}°F
+          <span className="font-semibold">Feels Like:</span>{" "}
+          {isCelsius ? `${current.feelslike_c}°C` : `${current.feelslike_f}°F`}
         </p>
         <p>
-          <span className="font-semibold">High/Low:</span> {maxTempC}°F / {minTempC}°F
+          <span className="font-semibold">High/Low:</span>{" "}
+          {isCelsius
+            ? `${maxTempC}°C / ${minTempC}°C`
+            : `${maxTempC}°F / ${minTempC}°F`}
         </p>
         <p>
           <span className="font-semibold">Humidity:</span> {current.humidity}%
         </p>
         <p>
-          <span className="font-semibold">Wind:</span> {current.wind_kph} km/h ({current.wind_dir})
+          <span className="font-semibold">Wind:</span> {current.wind_kph} km/h (
+          {current.wind_dir})
         </p>
         <p>
           <span className="font-semibold">UV Index:</span> {current.uv}

@@ -1,15 +1,18 @@
 import { useForecast, useCurrentWeather } from "../hooks/weather-hooks";
 import CurrentWeatherCard from "../components/general/weather/currentWeatherCard";
 import ForecastWeatherCard from "../components/general/weather/ForecastWeatherCard";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import Switch from "@mui/material/Switch";
 
 interface HomeProps {
   city: string;
 }
 
 const Home = ({ city }: HomeProps) => {
+  const [isCelsius, setIsCelsius] = useState(false);
+
   const {
     weather,
     loading: weatherLoading,
@@ -48,10 +51,21 @@ const Home = ({ city }: HomeProps) => {
         ) : weather && forecast && forecast.forecast?.forecastday?.[0] ? (
           <>
             <div className="mb-10">
-              <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 text-center">
-                Weather Today in {weather.location.name},{" "}
-                {weather.location.region}
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 text-center w-full">
+                  Weather Today in {weather.location.name},{" "}
+                  {weather.location.region}
+                </h2>
+                <div className="flex items-center space-x-2  ">
+                  <span className="text-lg font-bold text-gray-700">
+                    {isCelsius ? "°C" : "°F"}
+                  </span>
+                  <Switch
+                    checked={isCelsius}
+                    onChange={() => setIsCelsius((prev) => !prev)}
+                  />
+                </div>
+              </div>
               <div className="text-left max-w-fit mx-auto mt-1">
                 <p className="text-base sm:text-sm font-semibold text-gray-700 tracking-wide">
                   As of{" "}
@@ -67,8 +81,17 @@ const Home = ({ city }: HomeProps) => {
 
               <CurrentWeatherCard
                 current={weather.current}
-                maxTempC={forecast.forecast.forecastday[0].day.maxtemp_f}
-                minTempC={forecast.forecast.forecastday[0].day.mintemp_f}
+                maxTempC={
+                  isCelsius
+                    ? forecast.forecast.forecastday[0].day.maxtemp_c
+                    : forecast.forecast.forecastday[0].day.maxtemp_f
+                }
+                minTempC={
+                  isCelsius
+                    ? forecast.forecast.forecastday[0].day.mintemp_c
+                    : forecast.forecast.forecastday[0].day.mintemp_f
+                }
+                isCelsius={isCelsius}
               />
             </div>
 
@@ -83,8 +106,9 @@ const Home = ({ city }: HomeProps) => {
                   date={day.date}
                   icon={day.day.condition.icon}
                   condition={day.day.condition.text}
-                  maxTempC={day.day.maxtemp_f}
-                  minTempC={day.day.mintemp_f}
+                  maxTempC={isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f}
+                  minTempC={isCelsius ? day.day.mintemp_c : day.day.mintemp_f}
+                  isCelsius={isCelsius}
                 />
               ))}
             </div>
@@ -99,7 +123,9 @@ const Home = ({ city }: HomeProps) => {
             </p>
             <p className="text-sm text-gray-600 font-semibold">
               Try searching for{" "}
-              <span className="font-semibold text-blue-700">"Simpsonville"</span>{" "}
+              <span className="font-semibold text-blue-700">
+                "Simpsonville"
+              </span>{" "}
               or a ZIP like{" "}
               <span className="font-semibold text-blue-700">"29681"</span>.
             </p>

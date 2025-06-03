@@ -26,6 +26,8 @@ export interface ForecastDay {
   day: {
     maxtemp_f: number;
     mintemp_f: number;
+    maxtemp_c: number;
+    mintemp_c: number;
     condition: {
       text: string;
       icon: string;
