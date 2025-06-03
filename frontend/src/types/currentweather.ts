@@ -1,4 +1,4 @@
-export interface GetCurrentWeatherResponse {
+export interface CurrentWeatherApiResponse {
   location: WeatherLocation;
   current: WeatherCurrent;
 }

@@ -33,7 +33,7 @@ export const getCurrentWeather: APIGatewayProxyHandler = async (event) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: currentWeatherData,
+      body: JSON.stringify(JSON.parse(currentWeatherData)),
     };
   } catch (err) {
     console.error("Error fetching weather:", err);
@@ -46,7 +46,7 @@ export const getCurrentWeather: APIGatewayProxyHandler = async (event) => {
 
 export const getForecast: APIGatewayProxyHandler = async (event) => {
   const city = event.queryStringParameters?.city || "Simpsonville";
-  const days = event.queryStringParameters?.days || "3";
+  const days = event.queryStringParameters?.days || "8";
   const aqi = event.queryStringParameters?.aqi || "yes";
   const alerts = event.queryStringParameters?.alerts || "yes";
   const apiKey = process.env.WEATHERAPI_KEY;
@@ -68,7 +68,7 @@ export const getForecast: APIGatewayProxyHandler = async (event) => {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: forecastData,
+      body: JSON.stringify(JSON.parse(forecastData)),
     };
   } catch (err) {
     console.error("Error fetching forecast:", err);
