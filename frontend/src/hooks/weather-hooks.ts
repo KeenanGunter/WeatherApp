@@ -16,7 +16,7 @@ export const useCurrentWeather = (city: string) => {
         if (data.error?.code === 1006) {
           setError("City not found");
         } else {
-          setWeather(data);  // ✅ only update if data is valid
+          setWeather(data);
           setError("");
         }
       })
@@ -42,7 +42,7 @@ export const useForecast = (city: string, days = 8) => {
         if (data.error?.code === 1006) {
           setError("City not found");
         } else {
-          setForecast(data);  // ✅ only update if data is valid
+          setForecast(data);
           setError("");
         }
       })
