@@ -1,10 +1,19 @@
 <h1 align="center">🌦️ Keenan's Weather App</h1>
 
 <p align="center">
-  A modern, responsive weather application built with React, Vite, AWS Lambda, and WeatherAPI.
+  A weather application built with React, Vite, AWS Lambda, and WeatherAPI.
 </p>
 
 <br/>
+
+<h2>🌐 Live Link</h2>
+
+<p>
+  You can try the deployed version of this app here:<br/>
+  <a href="http://weatherapp-frontend-keengunt.s3-website.us-east-2.amazonaws.com/" target="_blank">
+    http://weatherapp-frontend-keengunt.s3-website.us-east-2.amazonaws.com/
+  </a>
+</p>
 
 <h2>🔧 Tech Stack</h2>
 
