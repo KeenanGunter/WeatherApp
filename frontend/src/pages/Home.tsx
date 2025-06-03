@@ -8,6 +8,7 @@ const Home = () => {
     <div className="p-8 flex justify-center">
       {loading && <p>Loading weather...</p>}
       {error && <p className="text-red-500">{error}</p>}
+      TESTING WEATHERAPP
     </div>
   );
 
