@@ -1,11 +1,45 @@
-Keenan's Weather App
+<h1 align="center">🌦️ Keenan's Weather App</h1>
 
-Frontend:
-cd frontend
+<p align="center">
+  A modern, responsive weather application built with React, Vite, AWS Lambda, and WeatherAPI.
+</p>
+
+<br/>
+
+<h2>🔧 Tech Stack</h2>
+
+<ul>
+  <li><strong>Frontend:</strong> React, Vite, TypeScript, Tailwind CSS, MUI</li>
+  <li><strong>Backend:</strong> AWS Lambda (Node.js / TypeScript) via API Gateway</li>
+  <li><strong>Weather Data:</strong> <a href="https://www.weatherapi.com/" target="_blank">WeatherAPI</a></li>
+  <li><strong>CI/CD:</strong> GitHub Actions (for deploying frontend to S3 and backend to Lambda)</li>
+</ul>
+
+<h2>🚀 Setup Instructions</h2>
+
+<ol>
+  <li>Clone the repo:</li>
+
+  <pre><code>git clone https://github.com/your-username/your-weather-app.git
+cd your-weather-app</code></pre>
+
+  <li>Install and run the frontend:</li>
+
+  <pre><code>cd frontend
 npm install
-npm run dev
+npm run dev</code></pre>
 
-Backend:
+  <li><strong>No <code>.env</code> file is needed for local development.</strong></li>
+</ol>
 
-Screenshot:
-![Homepage](homepage.png)
+<h2>🖼️ Screenshot</h2>
+
+<p align="center">
+  <img src="homepage.png" alt="Homepage" width="700"/>
+</p>
+
+---
+
+<p align="center">
+  Made by Keenan Gunter
+</p>
