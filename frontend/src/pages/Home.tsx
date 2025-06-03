@@ -51,12 +51,13 @@ const Home = ({ city }: HomeProps) => {
         ) : weather && forecast && forecast.forecast?.forecastday?.[0] ? (
           <>
             <div className="mb-10">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 text-center w-full">
+              <div className="relative mb-4">
+                <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 text-center">
                   Weather Today in {weather.location.name},{" "}
                   {weather.location.region}
                 </h2>
-                <div className="hidden sm:flex items-center space-x-2">
+
+                <div className="hidden sm:flex items-center space-x-2 absolute right-0 top-1/2 -translate-y-1/2">
                   <span className="text-lg font-bold text-gray-700">
                     {isCelsius ? "°C" : "°F"}
                   </span>
@@ -66,6 +67,7 @@ const Home = ({ city }: HomeProps) => {
                   />
                 </div>
               </div>
+
               <div className="text-left max-w-fit mx-auto mt-1">
                 <p className="text-base sm:text-sm font-semibold text-gray-700 tracking-wide">
                   As of{" "}
