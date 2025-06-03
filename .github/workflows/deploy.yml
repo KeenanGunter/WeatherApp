@@ -1,0 +1,60 @@
+name: Deploy Weather App
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: us-east-2
+  LAMBDA_FUNCTION_NAME: getCurrentWeather
+  S3_BUCKET_NAME: weatherapp-frontend-keengunt
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Setup AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # 🔧 Build Frontend
+      - name: Install dependencies
+        run: npm install
+        working-directory: frontend
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: frontend
+
+      - name: Deploy to S3
+        run: aws s3 sync ./dist s3://${{ env.S3_BUCKET_NAME }} --delete
+        working-directory: frontend
+
+      # 🔧 Deploy Lambda
+      - name: Install backend dependencies
+        run: npm ci
+        working-directory: lambda-backend
+
+      - name: Build backend
+        run: npx tsc
+        working-directory: lambda-backend
+
+      - name: Zip Lambda function
+        run: zip -r function.zip . -x "*.test.ts"
+        working-directory: lambda-backend/dist
+
+      - name: Update Lambda code
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://function.zip
+        working-directory: lambda-backend/dist
