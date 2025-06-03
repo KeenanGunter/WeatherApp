@@ -7,7 +7,6 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  LAMBDA_FUNCTION_NAME: getCurrentWeather
   S3_BUCKET_NAME: weatherapp-frontend-keengunt
 
 jobs:
@@ -25,12 +24,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: frontend
-
       - name: Set VITE_API_URL for frontend
         run: echo "VITE_API_URL=https://x6y8267y1h.execute-api.us-east-2.amazonaws.com/dev" > .env
+        working-directory: frontend
+
+      - name: Install frontend dependencies
+        run: npm install
         working-directory: frontend
 
       - name: Build frontend
@@ -49,13 +48,20 @@ jobs:
         run: npx tsc
         working-directory: lambda-backend
 
-      - name: Zip Lambda function
+      - name: Zip Lambda code
         run: zip -r function.zip . -x "*.test.ts"
         working-directory: lambda-backend/dist
 
-      - name: Update Lambda code
+      - name: Deploy getCurrentWeather
         run: |
           aws lambda update-function-code \
-            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --function-name getCurrentWeather \
+            --zip-file fileb://function.zip
+        working-directory: lambda-backend/dist
+
+      - name: Deploy getForecast
+        run: |
+          aws lambda update-function-code \
+            --function-name getForecast \
             --zip-file fileb://function.zip
         working-directory: lambda-backend/dist
