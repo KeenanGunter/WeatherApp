@@ -43,3 +43,38 @@ export const getCurrentWeather: APIGatewayProxyHandler = async (event) => {
     };
   }
 };
+
+export const getForecast: APIGatewayProxyHandler = async (event) => {
+  const city = event.queryStringParameters?.city || "Simpsonville";
+  const days = event.queryStringParameters?.days || "3";
+  const aqi = event.queryStringParameters?.aqi || "yes";
+  const alerts = event.queryStringParameters?.alerts || "yes";
+  const apiKey = process.env.WEATHERAPI_KEY;
+
+  const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=${days}&aqi=${aqi}&alerts=${alerts}`;
+
+  try {
+    const forecastData = await new Promise<string>((resolve, reject) => {
+      https.get(url, (res) => {
+        let data = "";
+        res.on("data", (chunk) => (data += chunk));
+        res.on("end", () => resolve(data));
+      }).on("error", reject);
+    });
+
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: forecastData,
+    };
+  } catch (err) {
+    console.error("Error fetching forecast:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to fetch forecast data" }),
+    };
+  }
+};
