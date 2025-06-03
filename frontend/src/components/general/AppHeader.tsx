@@ -40,7 +40,7 @@ const AppHeader = ({ onCityChange }: AppHeaderProps) => {
     <header className="sticky top-0 left-0 right-0 w-full bg-blue-800/5 backdrop-blur-md z-50">
       <div className="max-w-[1200px] w-full mx-auto px-4 flex h-12 min-w-[300px] items-center justify-between">
         <div className="flex items-center space-x-2">
-          <img src={favicon} alt="Weather Icon" className="w-8 h-10 mt-1" />
+          <img src={favicon} alt="Weather Icon" className="w-8 h-10 sm:w-12 sm:h-12 min-w-[32px] min-h-[32px]" />
           <div className="text-black text-2xl font-semibold hidden sm:block">
             Keenan's Weather App
           </div>

@@ -56,7 +56,7 @@ const Home = ({ city }: HomeProps) => {
                   Weather Today in {weather.location.name},{" "}
                   {weather.location.region}
                 </h2>
-                <div className="flex items-center space-x-2  ">
+                <div className="hidden sm:flex items-center space-x-2">
                   <span className="text-lg font-bold text-gray-700">
                     {isCelsius ? "°C" : "°F"}
                   </span>
@@ -77,6 +77,17 @@ const Home = ({ city }: HomeProps) => {
                   })}{" "}
                   EDT
                 </p>
+              </div>
+
+              <div className="flex sm:hidden justify-center items-center space-x-2 mt-4">
+                <span className="text-base font-bold text-gray-700">
+                  {isCelsius ? "°C" : "°F"}
+                </span>
+                <Switch
+                  checked={isCelsius}
+                  onChange={() => setIsCelsius((prev) => !prev)}
+                  size="small"
+                />
               </div>
 
               <CurrentWeatherCard
