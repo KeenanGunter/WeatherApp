@@ -1,8 +1,8 @@
-import React from "react";
+//import React from "react";
 import { useWeather } from "../hooks/useWeather";
 
 const Home = () => {
-  const { weather, loading, error } = useWeather("London");
+  const {  loading, error } = useWeather("London");
 
   return (
     <div className="p-8 flex justify-center">
