@@ -36,7 +36,7 @@ const CitySearchBar = forwardRef<CitySearchBarHandles, Props>(
           e.preventDefault();
           handleSearch();
         }}
-        className="flex items-center bg-white/90 border border-blue-800 rounded-2xl px-3 shadow-lg w-[300px] sm:w-[360px]"
+        className="flex items-center bg-white/90 border border-blue-800 rounded-2xl px-3 shadow-lg w-[260px] sm:w-[360px]"
       >
         <InputBase
           sx={{ flex: 1, paddingLeft: 2 }}
