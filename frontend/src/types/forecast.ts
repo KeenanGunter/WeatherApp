@@ -24,8 +24,8 @@ export interface ForecastApiResponse {
 export interface ForecastDay {
   date: string;
   day: {
-    maxtemp_c: number;
-    mintemp_c: number;
+    maxtemp_f: number;
+    mintemp_f: number;
     condition: {
       text: string;
       icon: string;
