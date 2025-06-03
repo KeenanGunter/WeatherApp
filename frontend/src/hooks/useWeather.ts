@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { GetCurrentWeatherResponse } from "../types/currentweather";
+const baseUrl = import.meta.env.VITE_API_URL;
 
 export const useWeather = (city: string) => {
   const [weather, setWeather] = useState<GetCurrentWeatherResponse | null>(null);
@@ -7,7 +8,7 @@ export const useWeather = (city: string) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/weather?city=${encodeURIComponent(city)}`)
+    fetch(`${baseUrl}/api/weather?city=${encodeURIComponent(city)}`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
