@@ -1,6 +1,9 @@
 import { useForecast, useCurrentWeather } from "../hooks/weather-hooks";
 import CurrentWeatherCard from "../components/general/weather/currentWeatherCard";
 import ForecastWeatherCard from "../components/general/weather/ForecastWeatherCard";
+import { useEffect, useRef } from "react";
+import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface HomeProps {
   city: string;
@@ -12,75 +15,94 @@ const Home = ({ city }: HomeProps) => {
     loading: weatherLoading,
     error: weatherError,
   } = useCurrentWeather(city);
+
   const {
     forecast,
     loading: forecastLoading,
     error: forecastError,
   } = useForecast(city, 8);
 
-  if (weatherLoading || forecastLoading)
-    return <p className="text-center mt-10">Loading...</p>;
-  if (weatherError)
-    return (
-      <p className="text-center text-red-500 mt-10">
-        Error fetching weather: {weatherError}
-      </p>
-    );
-  if (forecastError)
-    return (
-      <p className="text-center text-red-500 mt-10">
-        Error fetching forecast: {forecastError}
-      </p>
-    );
+  const toastShownRef = useRef(false);
+
+  useEffect(() => {
+    const cityNotFound =
+      weatherError === "City not found" || forecastError === "City not found";
+
+    if (cityNotFound && !toastShownRef.current) {
+      toast.error(`City/Zipcode: ${city} not found or invalid.`);
+      toastShownRef.current = true;
+    }
+
+    if (!weatherError && !forecastError) {
+      toastShownRef.current = false;
+    }
+  }, [weatherError, forecastError]);
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 py-10">
       <div className="rounded-lg shadow-md bg-gradient-to-r from-sky-200 via-sky-200 to-sky-100 p-6 shadow-lg shadow-black/50">
-        {weather && forecast && forecast.forecast?.forecastday?.[0] && (
-          <div className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
-              Weather Today in {weather.location.name},{" "}
-              {weather.location.region}
-            </h2>
-            <div className="text-left max-w-fit mx-auto mt-1">
-              <p className="text-base sm:text-lg font-semibold text-gray-700 tracking-wide">
-                As of{" "}
-                {new Date().toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                  timeZone: "America/New_York",
-                })}{" "}
-                EDT
-              </p>
+        {weatherLoading || forecastLoading ? (
+          <div className="flex justify-center items-center h-40">
+            <CircularProgress color="primary" />
+          </div>
+        ) : weather && forecast && forecast.forecast?.forecastday?.[0] ? (
+          <>
+            <div className="mb-10">
+              <h2 className="text-2xl sm:text-2xl font-bold text-gray-900 text-center">
+                Weather Today in {weather.location.name},{" "}
+                {weather.location.region}
+              </h2>
+              <div className="text-left max-w-fit mx-auto mt-1">
+                <p className="text-base sm:text-sm font-semibold text-gray-700 tracking-wide">
+                  As of{" "}
+                  {new Date().toLocaleTimeString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
+                    timeZone: "America/New_York",
+                  })}{" "}
+                  EDT
+                </p>
+              </div>
+
+              <CurrentWeatherCard
+                current={weather.current}
+                maxTempC={forecast.forecast.forecastday[0].day.maxtemp_f}
+                minTempC={forecast.forecast.forecastday[0].day.mintemp_f}
+              />
             </div>
 
-            <CurrentWeatherCard
-              current={weather.current}
-              maxTempC={forecast.forecast.forecastday[0].day.maxtemp_f}
-              minTempC={forecast.forecast.forecastday[0].day.mintemp_f}
-            />
-          </div>
-        )}
-
-        <div className="my-8 border-t border-blue-800" />
-
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-          8-Day Weather Forecast
-        </h3>
-
-        {forecast?.forecast?.forecastday && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {forecast.forecast.forecastday.map((day) => (
-              <ForecastWeatherCard
-                key={day.date}
-                date={day.date}
-                icon={day.day.condition.icon}
-                condition={day.day.condition.text}
-                maxTempC={day.day.maxtemp_f}
-                minTempC={day.day.mintemp_f}
-              />
-            ))}
+            <div className="my-8 border-t border-blue-800" />
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+              8-Day Weather Forecast
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {forecast.forecast.forecastday.map((day) => (
+                <ForecastWeatherCard
+                  key={day.date}
+                  date={day.date}
+                  icon={day.day.condition.icon}
+                  condition={day.day.condition.text}
+                  maxTempC={day.day.maxtemp_f}
+                  minTempC={day.day.mintemp_f}
+                />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-10">
+            <h2 className="text-xl font-bold text-gray-800 mb-2">
+              No results found
+            </h2>
+            <p className="text-sm font-semibold text-gray-600 mb-1">
+              Please enter a valid city name or ZIP code.
+            </p>
+            <p className="text-sm text-gray-600 font-semibold">
+              Try searching for{" "}
+              <span className="font-semibold text-blue-700">"Simpsonville"</span>{" "}
+              or a ZIP like{" "}
+              <span className="font-semibold text-blue-700">"29681"</span>.
+            </p>
           </div>
         )}
       </div>

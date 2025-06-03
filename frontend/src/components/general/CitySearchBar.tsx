@@ -11,7 +11,8 @@ const CitySearchBar = ({ onSearch }: Props) => {
 
   const handleSearch = () => {
     const trimmed = input.trim();
-    if (trimmed) onSearch(trimmed);
+    const query = trimmed || "Simpsonville";
+    onSearch(query);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
