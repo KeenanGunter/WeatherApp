@@ -15,8 +15,7 @@ export const useCurrentWeather = (city: string) => {
         return res.json();
       })
       .then((data) => {
-        const parsed: CurrentWeatherApiResponse = JSON.parse(data.body);
-        setWeather(parsed);
+        setWeather(data);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
