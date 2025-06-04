@@ -38,6 +38,12 @@ cd your-weather-app</code></pre>
 npm install
 npm run dev</code></pre>
 
+  <li>Install the backend (Avoid package errors while viewing. Backend is not required to be ran locally for local development):</li>
+  <pre><code>cd lambda-backend
+npm install
+</code></pre>
+
+
   <li><strong>No <code>.env</code> file is needed for local development.</strong></li>
 </ol>
 
