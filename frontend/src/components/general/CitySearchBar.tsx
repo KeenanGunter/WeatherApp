@@ -40,7 +40,7 @@ const CitySearchBar = forwardRef<CitySearchBarHandles, Props>(
       >
         <InputBase
           sx={{ flex: 1, paddingLeft: 2 }}
-          placeholder="Search city..."
+          placeholder="Search city or zip code..."
           inputProps={{ "aria-label": "search city" }}
           value={input}
           onChange={(e) => setInput(e.target.value)}
