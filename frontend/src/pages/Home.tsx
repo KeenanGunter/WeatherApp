@@ -23,7 +23,7 @@ const Home = ({ city }: HomeProps) => {
     forecast,
     loading: forecastLoading,
     error: forecastError,
-  } = useForecast(city, 8);
+  } = useForecast(city, 10);
 
   const toastShownRef = useRef(false);
 
@@ -40,6 +40,8 @@ const Home = ({ city }: HomeProps) => {
       toastShownRef.current = false;
     }
   }, [weatherError, forecastError]);
+
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 py-10">
@@ -113,7 +115,7 @@ const Home = ({ city }: HomeProps) => {
               8-Day Weather Forecast
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {forecast.forecast.forecastday.map((day) => (
+              {forecast.forecast.forecastday.filter((day) => day.date > today).map((day) => (
                 <ForecastWeatherCard
                   key={day.date}
                   date={day.date}
