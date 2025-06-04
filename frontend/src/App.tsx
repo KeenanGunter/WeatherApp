@@ -5,11 +5,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 import AppHeader from "./components/general/AppHeader";
 import AppFooter from "./components/general/AppFooter";
 import Home from "./pages/Home";
-import { CssBaseline } from '@mui/material';
+import { CssBaseline } from "@mui/material";
 import { useState } from "react";
 
 function App() {
-  const [city, setCity] = useState("Simpsonville");
+  const [city, setCity] = useState(() => {
+    return localStorage.getItem("lastSuccessfulCity") || "Simpsonville";
+  });
 
   return (
     <Router>
@@ -30,6 +32,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;

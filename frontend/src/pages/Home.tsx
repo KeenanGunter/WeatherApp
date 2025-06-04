@@ -36,10 +36,11 @@ const Home = ({ city }: HomeProps) => {
       toastShownRef.current = true;
     }
 
-    if (!weatherError && !forecastError) {
+    if (!weatherError && !forecastError && weather && forecast) {
       toastShownRef.current = false;
+      localStorage.setItem("lastSuccessfulCity", city);
     }
-  }, [weatherError, forecastError]);
+  }, [weatherError, forecastError, weather, forecast]);
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -115,17 +116,20 @@ const Home = ({ city }: HomeProps) => {
               Next 8 Days Forecast
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {forecast.forecast.forecastday.filter((day) => day.date > today).slice(0, 8).map((day) => (
-                <ForecastWeatherCard
-                  key={day.date}
-                  date={day.date}
-                  icon={day.day.condition.icon}
-                  condition={day.day.condition.text}
-                  maxTempC={isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f}
-                  minTempC={isCelsius ? day.day.mintemp_c : day.day.mintemp_f}
-                  isCelsius={isCelsius}
-                />
-              ))}
+              {forecast.forecast.forecastday
+                .filter((day) => day.date > today)
+                .slice(0, 8)
+                .map((day) => (
+                  <ForecastWeatherCard
+                    key={day.date}
+                    date={day.date}
+                    icon={day.day.condition.icon}
+                    condition={day.day.condition.text}
+                    maxTempC={isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f}
+                    minTempC={isCelsius ? day.day.mintemp_c : day.day.mintemp_f}
+                    isCelsius={isCelsius}
+                  />
+                ))}
             </div>
           </>
         ) : (
