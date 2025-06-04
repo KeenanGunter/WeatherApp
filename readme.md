@@ -29,8 +29,8 @@
 <ol>
   <li>Clone the repo:</li>
 
-  <pre><code>git clone https://github.com/your-username/your-weather-app.git
-cd your-weather-app</code></pre>
+  <pre><code>git clone https://github.com/KeenanGunter/WeatherApp.git
+cd WeatherApp</code></pre>
 
   <li>Install and run the frontend:</li>
 
