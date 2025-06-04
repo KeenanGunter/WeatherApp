@@ -115,7 +115,7 @@ const Home = ({ city }: HomeProps) => {
               Next 8 Days Forecast
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {forecast.forecast.forecastday.filter((day) => day.date > today).map((day) => (
+              {forecast.forecast.forecastday.filter((day) => day.date > today).slice(0, 8).map((day) => (
                 <ForecastWeatherCard
                   key={day.date}
                   date={day.date}
