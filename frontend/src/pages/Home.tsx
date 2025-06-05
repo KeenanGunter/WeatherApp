@@ -1,6 +1,6 @@
 import { useForecast, useCurrentWeather } from "../hooks/weather-hooks";
-import CurrentWeatherCard from "../components/general/weather/currentWeatherCard";
-import ForecastWeatherCard from "../components/general/weather/ForecastWeatherCard";
+import CurrentWeatherCard from "../components/weather/currentWeatherCard";
+import ForecastWeatherCard from "../components/weather/ForecastWeatherCard";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";

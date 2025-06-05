@@ -1,4 +1,4 @@
-import type { WeatherCurrent } from "../../../types/currentweather";
+import type { WeatherCurrent } from "../../types/currentweather";
 
 interface Props {
   current: WeatherCurrent;
@@ -46,14 +46,16 @@ const CurrentWeatherCard = ({
           <span className="font-semibold">Humidity:</span> {current.humidity}%
         </p>
         <p>
-          <span className="font-semibold">Wind:</span> {current.wind_kph} km/h (
+          <span className="font-semibold">Wind:</span>{" "}
+          {isCelsius ? `${current.wind_kph} km/h` : `${current.wind_mph} mph`} (
           {current.wind_dir})
         </p>
         <p>
           <span className="font-semibold">UV Index:</span> {current.uv}
         </p>
         <p>
-          <span className="font-semibold">Visibility:</span> {current.vis_km} km
+          <span className="font-semibold">Visibility:</span> {" "}
+          {isCelsius ? `${current.vis_km} km` : `${current.vis_miles} miles`}
         </p>
       </div>
     </div>
