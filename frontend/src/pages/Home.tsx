@@ -23,7 +23,7 @@ const Home = ({ city }: HomeProps) => {
     forecast,
     loading: forecastLoading,
     error: forecastError,
-  } = useForecast(city, 10);
+  } = useForecast(city, 8);
 
   const toastShownRef = useRef(false);
 
@@ -42,11 +42,9 @@ const Home = ({ city }: HomeProps) => {
     }
   }, [weatherError, forecastError, weather, forecast]);
 
-  const today = new Date().toISOString().split("T")[0];
-
   return (
     <div className="w-full max-w-[1200px] mx-auto px-4 py-10">
-      <div className="rounded-lg shadow-md bg-gradient-to-r from-sky-200 via-sky-200 to-sky-100 p-6 shadow-lg shadow-black/50">
+      <div className="rounded-lg shadow-md bg-gradient-to-r from-sky-200 via-sky-200 to-sky-100 p-6 shadow-black/50">
         {weatherLoading || forecastLoading ? (
           <div className="flex justify-center items-center h-40">
             <CircularProgress color="primary" />
@@ -117,16 +115,14 @@ const Home = ({ city }: HomeProps) => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {forecast.forecast.forecastday
-                .filter((day) => day.date > today)
-                .slice(0, 8)
                 .map((day) => (
                   <ForecastWeatherCard
                     key={day.date}
                     date={day.date}
                     icon={day.day.condition.icon}
                     condition={day.day.condition.text}
-                    maxTempC={isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f}
-                    minTempC={isCelsius ? day.day.mintemp_c : day.day.mintemp_f}
+                    maxTemp={isCelsius ? day.day.maxtemp_c : day.day.maxtemp_f}
+                    minTemp={isCelsius ? day.day.mintemp_c : day.day.mintemp_f}
                     isCelsius={isCelsius}
                   />
                 ))}
