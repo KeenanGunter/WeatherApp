@@ -111,7 +111,7 @@ const Home = ({ city }: HomeProps) => {
 
             <div className="my-8 border-t border-blue-800" />
             <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-              8-Day Forecast
+              3-Day Forecast
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {forecast.forecast.forecastday
